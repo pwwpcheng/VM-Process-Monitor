@@ -1,5 +1,6 @@
-=================================================
-# INTRODUCTION:
+#VM Process Monitor
+
+## INTRODUCTION:
 
 VM Process is a light-weighted web service that can be used
 to monitor cpu and memory usage of processes on virtual machines.
@@ -9,8 +10,7 @@ to install any monitor plug-ins into his machine. Techniques
 behind this project is implemented through usage of LibVMI APIs
 and reading linux headers.
 
-=================================================
-# BEFORE RUNNING:
+## BEFORE RUNNING:
 
 It is assumed that the OpenStack Nova project is installed on 
 this machine, and there are instances currently running . 
@@ -19,13 +19,13 @@ ensure that libvirt is properly configured before installing
 libvmi. To check if libvirt is correctly configured, run the
 following command:
 
-\# virsh list
+*\# virsh list*
 
 You should see a list of running instances on current hypervisor.
 If not, please solve them first!
 
-==================================================
-# INSTALLATION:
+
+## INSTALLATION:
 
 The project is written with C and Python 2.7. Please check if 
 you have installed Python2.7 and GCC compiler. Also, some extra
@@ -43,7 +43,7 @@ Install LibVMI:
 http://libvmi.com/docs/gcode-install.html
 
 Compile out-of-box monitor 
-\# gcc -fPIC out-of-box-api.c -lvmi ../libvmi/libvmi.h -shared -o out-of-box-api.so
+*\# gcc -fPIC out-of-box-api.c -lvmi ../libvmi/libvmi.h -shared -o out-of-box-api.so*
 
 Configure config file located at:
 ./monitor-client/config.py
@@ -52,20 +52,18 @@ Configure config file located at:
 Configure pecan installation at both monitor client
 and monitor controller folder:
 
-\# cd monitor-[client|controller]/
-\# python setup.py develop
+*\# cd monitor-[client|controller]/*
+*\# python setup.py develop*
 
-==================================================
-# RUNNING:
+## RUNNING:
 
 Run pecan services from both monitor-controller and 
 monitor-client.
  
-\# pecan serve config.py
+*\# pecan serve config.py*
 
 
-==================================================
-# ENLIGHTENED BY:
+## ENLIGHTENED BY:
 
 Non-intrusive, out-of-band and out-of-the-box systems monitoring in the cloud
 
