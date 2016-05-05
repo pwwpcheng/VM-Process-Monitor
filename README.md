@@ -5,23 +5,25 @@ VM Process is a light-weighted web service that can be used
 to monitor cpu and memory usage of processes on virtual machines.
 This project provides out-of-the-box non-intrusive monitoring
 experience on virtual machines, which spares the need for users 
-to install any monitor plug-ins into his machine. Techniques
-behind this project is implemented through usage of LibVMI APIs
-and reading linux headers.
+to install any monitor plug-ins into his vm instance. Techniques
+behind this project is implemented through LibVMI APIs and 
+linux headers reading.
 
 ## BEFORE RUNNING:
 
-It is assumed that the OpenStack Nova project is installed on 
-this machine, and there are instances currently running . 
-ProcessMonitor is implemented through libvmi APIs. Please
-ensure that libvirt is properly configured before installing 
-libvmi. To check if libvirt is correctly configured, run the
+It is assumed that OpenStack Nova project is installed on 
+this machine, and there are currently running instances. 
+ProcessMonitor is implemented through LibVMI APIs, which needs 
+libvirt support. Please ensure that libvirt is properly 
+configured before installing libvmi. 
+To check if libvirt is correctly configured, run the
 following command:
 
 **\# virsh list**
 
 You should see a list of running instances on current hypervisor.
-If not, please solve them first!
+If not, then there could be something wrong with libvirt. Please
+solve these issues first.
 
 
 ## INSTALLATION:
@@ -29,11 +31,11 @@ If not, please solve them first!
 The project is written with C and Python 2.7. Please check if 
 you have installed Python2.7 and GCC compiler. Also, some extra
 python libraries are necessary for processing process information,
-including but is not limited to:
+including, yet not limited to:
 
 httplib, urllib2, yaml
 
-You may install them through pip. 
+You may install them through pip via *pip install <packet-name>*. 
 
 Install pecan framework: 
 
