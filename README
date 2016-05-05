@@ -1,0 +1,54 @@
+=================================================
+BEFORE RUNNING:
+
+It is assumed that the OpenStack Nova project is installed on 
+this machine, and there are instances running currently. 
+ProcessMonitor is implemented through libvmi APIs. Please
+ensure that libvirt is properly configured before installing 
+libvmi. To check if libvirt is correctly configured, run the
+following command:
+
+# virsh list
+
+You should see a list of running instances on current hypervisor.
+If not, please solve them first!
+
+==================================================
+INSTALLATION:
+
+The project is written with C and Python 2.7. Please check if 
+you have installed Python2.7 and GCC compiler. Also, some extra
+python libraries are necessary for processing process information,
+including but is not limited to:
+
+httplib, urllib2, yaml
+
+You may install them through pip. 
+
+Install pecan framework :
+http://www.pecanpy.org/ 
+
+Install LibVMI:
+http://libvmi.com/docs/gcode-install.html
+
+Compile out-of-box monitor 
+# gcc -fPIC out-of-box-api.c -lvmi ../libvmi/libvmi.h -shared -o out-of-box-api.so
+
+Configure config file located at:
+./monitor-client/config.py
+./monitor-controller/config.py
+
+Configure pecan installation at both monitor client
+and monitor controller folder:
+
+# cd monitor-[client|controller]/
+# python setup.py develop
+
+==================================================
+RUNNING:
+
+Run pecan services from both monitor-controller and 
+monitor-client.
+ 
+# pecan serve config.py
+
