@@ -1,8 +1,19 @@
 =================================================
+INTRODUCTION:
+
+VM Process is a light-weighted web service that can be used
+to monitor cpu and memory usage of processes on virtual machines.
+This project provides out-of-the-box non-intrusive monitoring
+experience on virtual machines, which spares the need for users 
+to install any monitor plug-ins into his machine. Techniques
+behind this project is implemented through usage of LibVMI APIs
+and reading linux headers.
+
+=================================================
 BEFORE RUNNING:
 
 It is assumed that the OpenStack Nova project is installed on 
-this machine, and there are instances running currently. 
+this machine, and there are instances currently running . 
 ProcessMonitor is implemented through libvmi APIs. Please
 ensure that libvirt is properly configured before installing 
 libvmi. To check if libvirt is correctly configured, run the
@@ -52,3 +63,15 @@ monitor-client.
  
 # pecan serve config.py
 
+
+==================================================
+ENLIGHTENED BY:
+
+Non-intrusive, out-of-band and out-of-the-box systems monitoring in the cloud
+
+Authors:	
+Sahil Suneja	University of Toronto, Toronto, ON, Canada
+Canturk Isci	IBM T.J. Watson Research Center, Yorktown Heights, NY, USA
+Vasanth Bala	IBM T.J. Watson Research Center, Yorktown Heights, NY, USA
+
+http://dl.acm.org/citation.cfm?id=2591971.2592009&coll=DL&dl=GUIDE
