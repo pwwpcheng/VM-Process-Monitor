@@ -1,6 +1,5 @@
 #VM Process Monitor
 
-## INTRODUCTION:
 
 VM Process is a light-weighted web service that can be used
 to monitor cpu and memory usage of processes on virtual machines.
@@ -19,7 +18,7 @@ ensure that libvirt is properly configured before installing
 libvmi. To check if libvirt is correctly configured, run the
 following command:
 
-*\# virsh list*
+**\# virsh list**
 
 You should see a list of running instances on current hypervisor.
 If not, please solve them first!
@@ -36,31 +35,41 @@ httplib, urllib2, yaml
 
 You may install them through pip. 
 
-Install pecan framework :
+Install pecan framework: 
+
 http://www.pecanpy.org/ 
 
+
 Install LibVMI:
+
 http://libvmi.com/docs/gcode-install.html
 
+
 Compile out-of-box monitor 
-*\# gcc -fPIC out-of-box-api.c -lvmi ../libvmi/libvmi.h -shared -o out-of-box-api.so*
+
+**\# gcc -fPIC out-of-box-api.c -lvmi ../libvmi/libvmi.h -shared -o out-of-box-api.so**
+
 
 Configure config file located at:
+
 ./monitor-client/config.py
 ./monitor-controller/config.py
+
 
 Configure pecan installation at both monitor client
 and monitor controller folder:
 
-*\# cd monitor-[client|controller]/*
-*\# python setup.py develop*
+**\# cd monitor-[client|controller]/**
+
+**\# python setup.py develop**
+
 
 ## RUNNING:
 
 Run pecan services from both monitor-controller and 
 monitor-client.
  
-*\# pecan serve config.py*
+**\# pecan serve config.py**
 
 
 ## ENLIGHTENED BY:
