@@ -75,10 +75,11 @@ my_init_module(
         stime_offset = (unsigned long) (&(p->stime)) - (unsigned long) (p);
         
         printk(KERN_ALERT "----------------------------------------------------------\n");
-        printk(KERN_ALERT "* This is an automatically generated script.\n");
-        printk(KERN_ALERT "* Copy the following lines to import-offsets.sh \n");
-        printk(KERN_ALERT "* Modify <image-id> to openstack image-id of current instance\n");
-        printk(KERN_ALERT "* And then run: bash import-offsets.sh\n\n");
+        printk(KERN_ALERT "#!/bin/bash\n");
+        printk(KERN_ALERT "# This is an automatically generated script.\n");
+        printk(KERN_ALERT "# Copy the following lines to import-offsets.sh \n");
+        printk(KERN_ALERT "# Modify <image-id> to openstack image-id of current instance\n");
+        printk(KERN_ALERT "# And then run: bash import-offsets.sh\n\n");
         printk(KERN_ALERT "export IMAGE_ID=<image-id>");
         printk(KERN_ALERT "glance image-update --property rt_priority_offset=0x%x ${IMAGE_ID}\n", (unsigned int) rt_priority_offset);
         printk(KERN_ALERT "glance image-update --property state_offset=0x%x ${IMAGE_ID}\n", (unsigned int) state_offset);
