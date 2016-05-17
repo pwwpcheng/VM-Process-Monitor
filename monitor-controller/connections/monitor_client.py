@@ -25,31 +25,36 @@ class MonitorClient(object):
         self.password = password
         
 
-    def get_process_list(self, instance_name, image_offsets):
+    def get_process_list(self, instance_name, image_name, image_offsets):
         # TODO(pwwp):
         # Add cache control for process list
         # Cache according to instance_name
         
-        return self._get_process_list(instance_name, image_offsets)
+        return self._get_process_list(instance_name, image_name, image_offsets)
 
     
-    def _get_process_list(self, instance_name, image_offsets):
+    def _get_process_list(self, instance_name, image_name, image_offsets):
         # Fetch process list from client
 
         params = { 
             'server': self.addr,
             'port': self.port,
             'instance': instance_name,
+            'image' : image_name,
             'version': 'v1'
             }
         url = 'http://%(server)s:%(port)s/%(version)s/'\
               'instances/%(instance)s/processes' % params
             
         headers  = {'Content-Type' : 'application/json'}
-        body = json.dumps(image_offsets.to_obj())
 
-        print headers
-        print body
+        _body = {
+            'image_name': image_name,
+            'image_offsets' : image_offsets.to_obj()
+        }
+
+        body = json.dumps(_body)
+
         req = ConnectionBase(url=url, headers=headers, 
                             body=body)
         #req = ConnectionBase(url=url, headers=headers)
@@ -57,4 +62,14 @@ class MonitorClient(object):
   
 
 def get_hypervisor_authentication(hypervisor_name):
-    pass
+    #result = None
+    #if hypervisor_name == 'computer242':
+    result = {
+        'addr': hypervisor_name,
+        'username': None,
+        'password': None,
+        'port': 11235
+    }
+    #else:
+    #    result = None
+    return result

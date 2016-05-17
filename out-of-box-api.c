@@ -99,18 +99,9 @@ extern void free_process_info_list(proc_info *);
 //proc_info *main(int argc, char **argv)
 //extern proc_info *process_list (int argc, char **argv)
 
-extern proc_info *process_list (char *name, image_offset *img_offsets)
+extern proc_info *process_list (char *name, image_offset *img_offsets, 
+                                char *config_string)
 {
-    /* check arguments */
-    //if (argc < 2 || argc > 3) {
-    //    printf("Usage: %s <vmname> [image_name]\n", argv[0]);
-    //    return NULL;
-    //} 
-
-    //char *name = argv[1], *image_name = NULL;
-    //if (argc == 3)
-    //    image_name = argv[2];    
-
     vmi_instance_t vmi;
     addr_t list_head = 0, next_list_entry = 0;
     addr_t current_process_addr = 0;
@@ -118,14 +109,22 @@ extern proc_info *process_list (char *name, image_offset *img_offsets)
     status_t status;
     int image_offsets_provided = 0;
 
+    printf("config_string: \n%s\n", config_string);
+
     /* initialize the libvmi library */
-    if (vmi_init(&vmi, VMI_AUTO | VMI_INIT_COMPLETE, name) == VMI_FAILURE)
+    if (vmi_init(&vmi, VMI_AUTO | VMI_INIT_PARTIAL, name) == VMI_FAILURE)
     {
-        printf("Failed to init LibVMI library.\n");
-        vmi_destroy(vmi);
+        printf("Failed to init Libvmi Library on the first time.");
+        return NULL;
+    }
+    if(vmi_init_complete_custom(&vmi, VMI_CONFIG_STRING, config_string) == VMI_FAILURE)
+    {
+        printf("Failed to init LibVMI library on the second time.\n");
         return NULL;
     }
 
+
+    printf("1\n");
     /* initialize the offsets */
     if(img_offsets == NULL)
     {
@@ -146,6 +145,7 @@ extern proc_info *process_list (char *name, image_offset *img_offsets)
         printf("Using provided image offsets\n");
     }
 
+    printf("2\n");
     /* pause the vm for consistent memory access */
     if (vmi_pause_vm(vmi) != VMI_SUCCESS)
     {
@@ -209,6 +209,7 @@ extern proc_info *process_list (char *name, image_offset *img_offsets)
 
     /* The first round */
     /* walk the task list and create  */
+    printf("First round.\n");
     proc_info *process_info_list_head = NULL, *previous_process_ptr = NULL, *current_process_ptr = NULL;
     int is_head = 1;
     time_t calculation_start_time, calculation_end_time;
@@ -257,6 +258,7 @@ extern proc_info *process_list (char *name, image_offset *img_offsets)
     sleep(3);
 
     /* The second round */
+    printf("Second round.\n");
     uint64_t total_memory_size = vmi_get_memsize(vmi) / 1024;                           // total_memory_size unit: KB
     int dont_read_next_process = 0;
     vmi_pause_vm(vmi);

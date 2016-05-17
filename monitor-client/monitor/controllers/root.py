@@ -33,6 +33,9 @@ class RootController(object):
             # Errors detected when converting hex string to int
             return self.error_json('ValueError', e)
 
+        if instance_name is None:
+            instance_name = "instance-00000239"
+
         proc_controller = VMProcessList(instance_name, image_offsets)
         return proc_controller.get_process_list()
 

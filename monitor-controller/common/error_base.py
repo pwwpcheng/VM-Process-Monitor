@@ -43,6 +43,6 @@ class ImagePropertyNotExist(ClientSideError):
         msg = '"%(image_id)s" has no property "%(property)s". '\
               'Please run the following command in CLI:"'\
               ' glance image-update --property %(property)s='\
-              '<value> %(image_id)s "' % param
+              '<value> %(image_id)s "' % params
         code = 404
-        super(ImagePropertyNotExist, self).__init__(code=code, msg=msg)
+        super(ImageHasNoProperties, self).__init__(code=code, msg=msg)

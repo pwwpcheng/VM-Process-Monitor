@@ -46,6 +46,7 @@ logging = {
     }
 }
 
+debug = True
 
 # Custom Configurations must be in Python dictionary format::
 #
@@ -54,7 +55,7 @@ logging = {
 # All configurations are accessible at::
 # pecan.conf
 
-# Absolute path for out-of-box-monitor.so 
-# Example:
-#   LIST_PROCESS_DLL_PATH = '/home/Ubuntu/VMProcessMonitor/monitor-client/out-of-box-monitor.so'
-LIST_PROCESS_DLL_PATH = ''
+# VMProcessMonitor Related:
+VM_PROCESS_DLL_PATH = '/home/computer242/out-of-box-monitor/out-of-box-api.so'
+SYSMAP_FOLDER_LOCATION = '/home/computer242/linux-system-map/'
+

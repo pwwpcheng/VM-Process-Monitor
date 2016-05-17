@@ -61,20 +61,27 @@ def _ImageOffsets_set_parameters(self, **kwargs):
 ImageOffsets.set_parameters = _ImageOffsets_set_parameters
 
 #test_dll.test_main.restype = POINTER(ProcInfo)
-cpu_dll.process_list.argstype = (c_char_p, POINTER(ImageOffsets))
+cpu_dll.process_list.argstype = (c_char_p, POINTER(ImageOffsets), c_char_p)
 cpu_dll.process_list.restype = POINTER(ProcInfo)
 
 NULL_PTR = POINTER(c_int)()
 
 
 img_offsets = ImageOffsets()
-kwargs = {'element_offset': '0x8', 'pid_offset': '0x2ac', 'rt_priority_offset': '0x5c', 'tasks_offset': '0x238', 'mm_offset': '0x270', 'stime_offset': '0x410', 'total_vm_offset': '0xa8', 'state_offset': '0x0', 'rss_stat_offset': '0x2a8', 'utime_offset': '0x388', 'name_offset': '0x460'}
+kwargs = {'element_offset': '0x8', 'pid_offset': '0x3f8', 'rt_priority_offset': '0x5c', 'tasks_offset': '0x338', 'mm_offset': '0x388', 'stime_offset': '0x4e8', 'total_vm_offset': '0xa8', 'state_offset': '0x0', 'rss_stat_offset': '0x3c0', 'utime_offset': '0x4e0', 'name_offset': '0x5c8'}
 img_offsets.set_parameters(**kwargs)
 
 print "img_offsets.tasks_offset = " + str(img_offsets.tasks_offset)
 
+params = {
+    'os': 'Linux',
+    'map': '/home/computer242/linux-system-map/System.map-3.16.0-30-generic'
+} 
 
-test_result = cpu_dll.process_list("instance-00000239", byref(img_offsets))
+config_string = '{\n   ostype = "%(os)s";\n'\
+    '   sysmap = "%(map)s";\n}' % params  
+
+test_result = cpu_dll.process_list("instance-000002f5", byref(img_offsets), config_string)
 head = test_result
 
 

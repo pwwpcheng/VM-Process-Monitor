@@ -43,7 +43,7 @@ class GlanceConnection(object):
         self._get_image_detail()
         
     
-    def get_image_name(self, image_id):       
+    def get_image_name(self):       
          # Get the name of a requested image
         try:
             return self.data['name']
@@ -56,6 +56,14 @@ class GlanceConnection(object):
         # Get offsets list of requested image
         offset_name_list =  getfields(ImageOffsets)
         offsets = {}
+
+        image_type = self._get_image_property('image_type', 'image')
+
+        if image_type == 'snapshot':
+            original_image_id = self._get_image_property('base_image_ref')
+            original_image_conn = GlanceConnection(self.token, self.tenant_id,
+                                                   original_image_id)
+            return original_image_conn.get_image_offsets()
 
         for offset_name in offset_name_list:
             offsets[offset_name] = self._get_image_property(offset_name)
@@ -75,7 +83,10 @@ class GlanceConnection(object):
         self.data = req.get_data()
 
 
-    def _get_image_property(self, prop):
+    def _get_image_property(self, prop, default=None):
         if not self.data.has_key(prop):
-            raise err.ImagePropertyNotExist(self.image_id, prop)
+            if default is not None:
+                return default
+            else:
+                raise err.ImagePropertyNotExist(self.image_id, prop)
         return self.data[prop]

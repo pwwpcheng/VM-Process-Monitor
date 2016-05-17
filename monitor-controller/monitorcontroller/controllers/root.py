@@ -32,6 +32,7 @@ class RootController(object):
 
             glance_conn = GlanceConnection(openstack_token, tenant_id, image_id)
             image_offsets = glance_conn.get_image_offsets()
+            image_name = glance_conn.get_image_name()
 
         except (err.ClientSideError, err.ServerSideError), e:
             return self._error_json(e.err_msg)
@@ -40,7 +41,8 @@ class RootController(object):
         client_conn = MonitorClient(**kwargs)
 
         try:
-            proc_list = client_conn.get_process_list(instance_name, image_offsets)
+            proc_list = client_conn.get_process_list(instance_name, image_name,
+                                                     image_offsets)
         except (err.ClientSideError, err.ServerSideError), e:
             return self._error_json(e.err_msg)
 
