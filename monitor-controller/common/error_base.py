@@ -46,3 +46,20 @@ class ImagePropertyNotExist(ClientSideError):
               '<value> %(image_id)s "' % params
         code = 404
         super(ImageHasNoProperties, self).__init__(code=code, msg=msg)
+
+
+class ImageNotExist(ClientSideError):
+    def __init__(self, image_id):
+        msg = 'Requested image (id: %s ) does not exist.' % (image_id)
+        code = 404
+        super(ImageNotExist, self).__init__(code=code, msg=msg)
+
+
+class AddressNotFound(ClientSideError):
+    def __init__(self, url):
+        msg = 'Requested address cannot be reached. Url: ' + url
+        code = 404
+        super(AddressNotFound, self).__init__(code=code, msg=msg)
+
+
+

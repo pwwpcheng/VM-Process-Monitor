@@ -53,7 +53,7 @@ logging = {
 # All configurations are accessible at::
 # pecan.conf
 
-openstack_server_addr = '166.111.143.220'
+openstack_server_addr = 
 nova_port = 8774
 nova_api_version = 'v2'
 

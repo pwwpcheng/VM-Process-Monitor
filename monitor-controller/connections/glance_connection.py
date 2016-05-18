@@ -1,4 +1,5 @@
 import json
+import pdb
 
 from pecan import conf
 from common import error_base as err
@@ -60,10 +61,17 @@ class GlanceConnection(object):
         image_type = self._get_image_property('image_type', 'image')
 
         if image_type == 'snapshot':
+            print "Snapshot encrossed. Get snapshots referer's image_offsets"
             original_image_id = self._get_image_property('base_image_ref')
-            original_image_conn = GlanceConnection(self.token, self.tenant_id,
-                                                   original_image_id)
-            return original_image_conn.get_image_offsets()
+            try:
+                original_image_conn = GlanceConnection(self.token, 
+                                                       self.tenant_id,
+                                                       original_image_id)
+                return original_image_conn.get_image_offsets()
+            except err.ImageNotExist, e:
+                # The original image could have been deleted. 
+                # Look for image offsets from current snapshot
+                pass
 
         for offset_name in offset_name_list:
             offsets[offset_name] = self._get_image_property(offset_name)
@@ -79,9 +87,11 @@ class GlanceConnection(object):
         headers  = {'Content-Type' : 'application/json',
                     'X-Auth-Token': self.token }
         req = ConnectionBase(url=url, headers=headers)
-        
-        self.data = req.get_data()
 
+        try:
+            self.data = req.get_data()
+        except err.AddressNotFound:
+            raise err.ImageNotExist(self.image_id)
 
     def _get_image_property(self, prop, default=None):
         if not self.data.has_key(prop):

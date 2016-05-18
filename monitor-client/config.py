@@ -56,6 +56,6 @@ debug = True
 # pecan.conf
 
 # VMProcessMonitor Related:
-VM_PROCESS_DLL_PATH = '/home/computer242/out-of-box-monitor/out-of-box-api.so'
-SYSMAP_FOLDER_LOCATION = '/home/computer242/linux-system-map/'
+VM_PROCESS_DLL_PATH = 
+SYSMAP_FOLDER_LOCATION = 
 

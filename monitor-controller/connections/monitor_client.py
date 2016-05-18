@@ -45,6 +45,7 @@ class MonitorClient(object):
             }
         url = 'http://%(server)s:%(port)s/%(version)s/'\
               'instances/%(instance)s/processes' % params
+        print url
             
         headers  = {'Content-Type' : 'application/json'}
 

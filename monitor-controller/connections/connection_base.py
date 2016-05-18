@@ -1,5 +1,6 @@
 import httplib
 import json
+import pdb
 import urllib2
 import yaml
 
@@ -25,7 +26,9 @@ class ConnectionBase(object):
             resp = urllib2.urlopen(self.request)
             return yaml.safe_load(resp.read())
         except urllib2.URLError as e:
-            raise err.ServerSideError(e.reason)
+            if e.getcode() == 404:
+                raise err.AddressNotFound(self.url)
+            raise err.ServerSideError(code=e.getcode(), msg=e.reason)
         #except TypeError, e:
         #    raise err.ServerSideError('Server returned nothing.')
         except httplib.BadStatusLine, e:
